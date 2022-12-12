@@ -76,10 +76,18 @@ public class TimerSystem extends BukkitRunnable {
     }
 
     private static class EvictionTask extends BukkitRunnable {
+        private final ConcurrentHashMap<Player, PlayerTimerSwitch> time;
 
+        public EvictionTask(ConcurrentHashMap<Player, PlayerTimerSwitch> time) {
+            this.time = time;
+        }
         @Override
         public void run() {
-
+            time.forEach(((player, timerSwitch) -> {
+                if (!player.isOnline()) {
+                    time.remove(player);
+                }
+            }));
         }
     }
 
@@ -104,7 +112,7 @@ public class TimerSystem extends BukkitRunnable {
             get(player).updateExpiry();
 
         });
-        this.evictionTask = new EvictionTask().runTaskTimerAsynchronously(plugin, 20 * 120, 20 * 120);
+        this.evictionTask = new EvictionTask(this.time).runTaskTimerAsynchronously(plugin, 20 * 120, 20 * 120);
 
         // clean up
         runTaskTimerAsynchronously(plugin, 20 * 2, 20 * 2);

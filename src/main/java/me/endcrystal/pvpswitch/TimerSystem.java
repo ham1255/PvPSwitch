@@ -128,5 +128,8 @@ public class TimerSystem extends BukkitRunnable {
         return INSTANCE;
     }
 
+    public static boolean isSwitchActive(Player player) {
+        return get().isPvpOnFor(player);
+    }
 
 }

@@ -54,7 +54,7 @@ tasks {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-                artifact(tasks.shadowJar)
+           artifact(tasks.reobfJar)
         }
     }
 }

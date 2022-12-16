@@ -24,8 +24,9 @@ public class EndCrystalExplosionListener implements Listener {
             // get explosion location
             final Location explosionLocation = event.getLocation();
             Collection<Player> players = explosionLocation.getNearbyEntitiesByType(Player.class, 50.0); // Todo: should not hard code?
-            for (Player player : players) {
-                timerSystem.setPvpOnFor(player);
+            if (players.size() >= 2)
+                for (Player player : players) {
+                    timerSystem.setPvpOnFor(player);
             }
         }
     }

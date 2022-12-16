@@ -47,6 +47,12 @@ public class Placeholders extends PlaceholderExpansion {
             if (params.equalsIgnoreCase("pvp-mode")) {
                 return String.valueOf(timerSystem.isPvpOnFor(player));
             }
+            if (params.equalsIgnoreCase("pvp-description")) {
+                if (timerSystem.isPvpOnFor(player)) {
+                    return "PVP Anti-Cheat: " + String.valueOf(timerSystem.leftSeconds(player)) + "s";
+                }
+                return "";
+            }
         }
 
         return "null";

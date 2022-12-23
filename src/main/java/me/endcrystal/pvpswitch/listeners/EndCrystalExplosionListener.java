@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.entity.*;
 
 import java.util.Collection;
 
@@ -26,10 +28,19 @@ public class EndCrystalExplosionListener implements Listener {
             Collection<Player> players = explosionLocation.getNearbyEntitiesByType(Player.class, 50.0); // Todo: should not hard code?
             if (players.size() >= 2)
                 for (Player player : players) {
-                    timerSystem.setPvpOnFor(player);
+                    if (!player.isDead()) timerSystem.setPvpOnFor(player);
             }
         }
     }
 
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        timerSystem.setPvpOnFor(event.getPlayer(), -2);
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        timerSystem.setPvpOnFor(event.getPlayer(), -2);
+    }
 
 }
